@@ -26,9 +26,77 @@
 
 ;; *** CODE FOR ANY HELPER FUNCTION GOES HERE ***
 
+(define list-index
+        (lambda (e lst)
+                (if (null? lst)
+                        -1
+                        (if (eq? (car lst) e)
+                                0
+                                (if (= (list-index e (cdr lst)) -1) 
+                                        -1
+                                        (+ 1 (list-index e (cdr lst))))))))
+
+(define list-max
+    (lambda (lst)
+      (cond
+        ((equal? '() lst) -inf.0)
+        (else (find-list-max (cdr lst) (car lst))))))
+ 
+(define find-list-max
+    (lambda (lst max-so-far)
+      (cond
+        ((equal? '() lst) max-so-far)
+        (else (find-list-max (cdr lst) (max (car lst) max-so-far))))))
+
+(define correctwords
+  (lambda (p)
+    (map (lambda (p) (spell-checker p)) p)))
+  
+(define dawg
+  (lambda (p)
+    (append (list (length (remove #f (correctwords (paragraph p 0)))))
+            (list (length (remove #f (correctwords (paragraph p 1)))))
+            (list (length (remove #f (correctwords (paragraph p 2)))))
+            (list (length (remove #f (correctwords (paragraph p 3)))))
+            (list (length (remove #f (correctwords (paragraph p 4)))))
+            (list (length (remove #f (correctwords (paragraph p 5)))))
+            (list (length (remove #f (correctwords (paragraph p 6)))))
+            (list (length (remove #f (correctwords (paragraph p 7)))))
+            (list (length (remove #f (correctwords (paragraph p 8)))))
+            (list (length (remove #f (correctwords (paragraph p 9)))))
+            (list (length (remove #f (correctwords (paragraph p 10)))))
+            (list (length (remove #f (correctwords (paragraph p 11)))))
+            (list (length (remove #f (correctwords (paragraph p 12)))))
+            (list (length (remove #f (correctwords (paragraph p 13)))))
+            (list (length (remove #f (correctwords (paragraph p 14)))))
+            (list (length (remove #f (correctwords (paragraph p 15)))))
+            (list (length (remove #f (correctwords (paragraph p 16)))))
+            (list (length (remove #f (correctwords (paragraph p 17)))))
+            (list (length (remove #f (correctwords (paragraph p 18)))))
+            (list (length (remove #f (correctwords (paragraph p 19)))))
+            (list (length (remove #f (correctwords (paragraph p 20)))))
+            (list (length (remove #f (correctwords (paragraph p 21)))))
+            (list (length (remove #f (correctwords (paragraph p 22)))))
+            (list (length (remove #f (correctwords (paragraph p 23)))))
+            (list (length (remove #f (correctwords (paragraph p 24)))))
+            (list (length (remove #f (correctwords (paragraph p 25))))))))
+      
+
+            
+
+            
 (define paragraph
   (lambda (p n)
-    (append ((encode-n n) (car p)) (paragraph (cdr p) n))))
+    (map (lambda (x) ((encode-n n) x)) p)));Takes an encoded word (being hte first word of a paragraph and appends recursively the first element the list starting from the second element of htat list. 
+
+(define (remove x ls)
+  (if (null? ls)
+      '()
+      (let ((h (car ls)))
+        ((if (eqv? x h)
+            (lambda (y) y)
+            (lambda (y) (cons h y)))
+         (remove x (cdr ls))))))
 
 ;; -----------------------------------------------------
 ;; SPELL CHECKER FUNCTION
@@ -47,6 +115,7 @@
 ;; -----------------------------------------------------
 ;; ENCODING FUNCTIONS
 
+
 ;;generate an Caesar Cipher single word encoders
 ;;INPUT:a number "n"
 ;;OUTPUT:a function, whose input=a word, output=encoded word
@@ -54,16 +123,20 @@
   (lambda (n);;"n" is the distance, eg. n=3: a->d,b->e,...z->c
     (lambda (w);;"w" is the word to be encoded
      
-     (map (lambda (x) (vtc x)) (map (lambda (x) (modulo(+ x n) 26)) (map (lambda (x) (ctv x)) w)))
+     (map (lambda (x) (vtc x)) ;;every value gets converted to its character
+          (map (lambda (x) (modulo(+ x n) 26))  ;;the algorithm is applied to the values
+               (map (lambda (x) (ctv x)) w))) ;;all of the characters are converted to their value
       
       )))
+
+
 
 ;;encode a document
 ;;INPUT: a document "d" and a "encoder"
 ;;OUTPUT: an encoded document using a provided encoder
 (define encode-d;;this encoder is supposed to be the output of "encode-n"
   (lambda (d encoder)
-    'SOME_CODE_GOES_HERE ;; *** FUNCTION BODY IS MISSING ***
+     (map (lambda (arg) (map encoder arg)) d) 
     ))
     
 ;; -----------------------------------------------------
@@ -75,8 +148,11 @@
 ;;OUTPUT:a decoder, whose input=a word, output=decoded word
 (define Gen-Decoder-A
   (lambda (p)
-    'SOME_CODE_GOES_HERE ;; *** FUNCTION BODY IS MISSING ***
-    ))
+   (if (= 0 0)
+    (encode-n (list-index (list-max (dawg p)) (dawg p)))
+    (encode-n (list-index (list-max (dawg p)) (dawg p))))))
+     
+       
 
 ;;generate a decoder using frequency analysis
 ;;INPUT:same as above
@@ -95,7 +171,7 @@
 (define Code-Breaker
   (lambda (d decoder)
     (
-     'SOME_CODE_GOES_HERE ;; *** FUNCTION BODY IS MISSING ***
+     (map (lambda (arg) (map decoder arg)) d) 
      )))
 
 ;; -----------------------------------------------------
