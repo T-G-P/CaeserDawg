@@ -26,28 +26,32 @@
 
 ;; *** CODE FOR ANY HELPER FUNCTION GOES HERE ***
 
-(define list-index
-        (lambda (e lst)
-                (if (null? lst)
-                        -1
-                        (if (eq? (car lst) e)
-                                0
-                                (if (= (list-index e (cdr lst)) -1) 
-                                        -1
-                                        (+ 1 (list-index e (cdr lst))))))))
+;This function takes in an element and a list and returns the index of that element in that list
+(define indexoflist
+ (lambda (i list) 
+  (if (null? list)
+   -1
+    (if (eq? (car list) i)
+      0
+      (if (= (indexoflist i (cdr list)) -1) 
+       -1
+       (+ 1 (indexoflist i (cdr list))))))))
 
-(define list-max
-    (lambda (lst)
+;This function returns the max element from the list
+(define listmax
+    (lambda (list)
       (cond
-        ((equal? '() lst) -inf.0)
-        (else (find-list-max (cdr lst) (car lst))))))
+        ((equal? '() list) -inf.0)
+        (else (findmaxlist (cdr list) (car list))))))
  
-(define find-list-max
-    (lambda (lst max-so-far)
+;This function recursively goes through the list and finds the max. 
+(define findmaxlist
+    (lambda (list maxcurr)
       (cond
-        ((equal? '() lst) max-so-far)
-        (else (find-list-max (cdr lst) (max (car lst) max-so-far))))))
+        ((equal? '() list) maxcurr)
+        (else (findmaxlist (cdr list) (max (car list) maxcurr))))))
 
+;This function  
 (define correctwords
   (lambda (p)
     (map (lambda (p) (spell-checker p)) p)))
@@ -149,8 +153,8 @@
 (define Gen-Decoder-A
   (lambda (p)
    (if (= 0 0)
-    (encode-n (list-index (list-max (dawg p)) (dawg p)))
-    (encode-n (list-index (list-max (dawg p)) (dawg p))))))
+    (encode-n (indexoflist (listmax (dawg p)) (dawg p)))
+    (encode-n (indexoflist (listmax (dawg p)) (dawg p))))))
      
        
 
