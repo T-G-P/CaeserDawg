@@ -181,8 +181,8 @@
 (define Gen-Decoder-A
   (lambda (p)
    (if (= 0 0)
-    (encode-n (indexoflist (listmax (dawg p)) (dawg p)))
-    (encode-n (indexoflist (listmax (dawg p)) (dawg p))))))
+    (encode-n (indexoflist (listmax (dawglist p)) (dawglist p)))
+    (encode-n (indexoflist (listmax (dawglist p)) (dawglist p))))))
      
        
 
@@ -193,7 +193,7 @@
   (lambda (p)
     (if (= 0 0)
     (encode-n (- 3 (indexoflist (listmax (broList p)) (broList p))))
-    (encode-n (- 3 (indexoflist (listmax (broList p)) (broList p)))))))
+    (encode-n (- 3 (indexoflist (listmax (broList p)) (broList p)))))))                                                                                               
     
 
 ;; -----------------------------------------------------
@@ -204,9 +204,8 @@
 ;;OUTPUT: a decoded document
 (define Code-Breaker
   (lambda (d decoder)
-    (
-     (map (lambda (arg) (map decoder arg)) d) 
-     )))
+     (encode-d d decoder) 
+     ))
 
 ;; -----------------------------------------------------
 ;; EXAMPLE APPLICATIONS OF FUNCTIONS
